@@ -425,3 +425,5 @@ TODO: уточнити спосіб авторизації та зберіган
 ## 🔗 Посилання
 
 - Репозиторій: [посилання на GitHub.](https://github.com/kryysq/FilmShelf-API.git)
+
+- Pull Request: [посилання на Pull Request](https://github.com/kryysq/FilmShelf-API/pull/1)
