@@ -86,6 +86,25 @@ class GenreDetailAPIView(APIView):
 class MovieListCreateAPIView(APIView):
     def get(self, request):
         movies = Movie.objects.all()
+
+        title = request.query_params.get('title', None)
+        genre_id = request.query_params.get('genre', None)
+        director_id = request.query_params.get('director', None)
+        year = request.query_params.get('year', None)
+        min_rating = request.query_params.get('min_rating', None)
+
+        #фільтри
+        if title:
+            movies = movies.filter(title__icontains=title) #Пошук
+        if genre_id:
+            movies = movies.filter(genre_id=genre_id)
+        if director_id:
+            movies = movies.filter(director_id=director_id)
+        if year:
+            movies = movies.filter(year=year)
+        if min_rating:
+            movies = movies.filter(rating__gte=min_rating) #мінімальний рейтингом
+
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
 
