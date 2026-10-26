@@ -1,0 +1,28 @@
+[
+  {
+    "model": "bookstore.director",
+    "pk": 1,
+    "fields": {
+      "name": "Christopher Nolan",
+      "bio": "British-American film director known for mind-bending blockbusters."
+    }
+  },
+  {
+    "model": "bookstore.genre",
+    "pk": 1,
+    "fields": {
+      "name": "Sci-Fi"
+    }
+  },
+  {
+    "model": "bookstore.movie",
+    "pk": 1,
+    "fields": {
+      "title": "Interstellar",
+      "director": 1,
+      "genre": 1,
+      "year": 2014,
+      "rating": 8.7
+    }
+  }
+]
