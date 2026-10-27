@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "FilmShelf API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Отримати список фільмів",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/titles",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "titles"]
+        }
+      }
+    },
+    {
+      "name": "2. Створити новий фільм",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Interstellar\",\n    \"type\": \"movie\",\n    \"release_year\": 2014,\n    \"rating\": 8.7\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/titles",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "titles"]
+        }
+      }
+    },
+    {
+      "name": "3. Помилка видалення режисера з фільмами (409 Conflict)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/people/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "people", "1"]
+        },
+        "description": "Спроба видалити режисера, до якого вже прив'язані фільми. Має повернути 409 помилку."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    }
+  ]
+}
