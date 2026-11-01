@@ -1,9 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
+from rest_framework.permissions import AllowAny
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from .models import Director, Genre, Movie
-from .serializers import DirectorSerializer, GenreSerializer, MovieSerializer
+from .serializers import DirectorSerializer, GenreSerializer, MovieSerializer, RegisterSerializer
 
 class DirectorListCreateAPIView(APIView):
     def get(self, request):
@@ -136,3 +138,16 @@ class MovieDetailAPIView(APIView):
         movie = self.get_object(pk)
         movie.delete()
         return Response(status=status.HTTP_24_NO_CONTENT)
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            #повертаємо 400
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_create(serializer)
+        return Response({"message": "Користувач створений успішно"}, status=status.HTTP_201_CREATED)
