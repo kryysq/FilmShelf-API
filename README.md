@@ -422,6 +422,16 @@ TODO: уточнити спосіб авторизації та зберіган
 
 ---
 
+## Authentication (JWT)
+- **POST /api/v1/auth/register/** - Реєстрація (тіло: username, email, password, password_confirm)
+- **POST /api/v1/auth/login/** - Логін (повертає `access` та `refresh` токени)
+- **POST /api/v1/auth/refresh/** - Оновлення токена
+
+Для доступу до захищених маршрутів передавайте токен у заголовку:
+`Authorization: Bearer <access_token>`
+
+---
+
 ## 🔗 Посилання
 
 - Репозиторій: [посилання на GitHub.](https://github.com/kryysq/FilmShelf-API.git)
