@@ -1,15 +1,13 @@
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
-from rest_framework.permissions import AllowAny
-from django.contrib.auth.models import User
+from rest_framework import status
 from django.shortcuts import get_object_or_404
+from users.permissions import AuthenticatedWriteAdminDelete
 from .models import Director, Genre, Movie
-from .serializers import DirectorSerializer, GenreSerializer, MovieSerializer, RegisterSerializer
+from .serializers import DirectorSerializer, GenreSerializer, MovieSerializer
 
 class DirectorListCreateAPIView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AuthenticatedWriteAdminDelete]
 
     def get(self, request):
         directors = Director.objects.all()
@@ -24,7 +22,7 @@ class DirectorListCreateAPIView(APIView):
         return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class DirectorDetailAPIView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AuthenticatedWriteAdminDelete]
 
     def get_object(self, pk):
         return get_object_or_404(Director, pk=pk)
@@ -49,10 +47,10 @@ class DirectorDetailAPIView(APIView):
                 "error": f"Неможливо видалити режисера '{director.name}', оскільки за ним закріплені фільми."
             }, status=status.HTTP_409_CONFLICT)
         director.delete()
-        return Response(status=status.HTTP_24_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class GenreListCreateAPIView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AuthenticatedWriteAdminDelete]
 
     def get(self, request):
         genres = Genre.objects.all()
@@ -67,7 +65,7 @@ class GenreListCreateAPIView(APIView):
         return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class GenreDetailAPIView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AuthenticatedWriteAdminDelete]
 
     def get_object(self, pk):
         return get_object_or_404(Genre, pk=pk)
@@ -92,10 +90,10 @@ class GenreDetailAPIView(APIView):
                 "error": f"Неможливо видалити жанр '{genre.name}', оскільки до нього належать фільми."
             }, status=status.HTTP_409_CONFLICT)
         genre.delete()
-        return Response(status=status.HTTP_24_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class MovieListCreateAPIView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AuthenticatedWriteAdminDelete]
 
     def get(self, request):
         movies = Movie.objects.all()
@@ -129,7 +127,7 @@ class MovieListCreateAPIView(APIView):
         return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieDetailAPIView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AuthenticatedWriteAdminDelete]
 
     def get_object(self, pk):
         return get_object_or_404(Movie, pk=pk)
@@ -150,17 +148,4 @@ class MovieDetailAPIView(APIView):
     def delete(self, request, pk):
         movie = self.get_object(pk)
         movie.delete()
-        return Response(status=status.HTTP_24_NO_CONTENT)
-
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            #повертаємо 400
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        self.perform_create(serializer)
-        return Response({"message": "Користувач створений успішно"}, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_204_NO_CONTENT)
