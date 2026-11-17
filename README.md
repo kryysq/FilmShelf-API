@@ -422,6 +422,39 @@ TODO: уточнити спосіб авторизації та зберіган
 
 ---
 
+## Налаштування середовища
+
+1. Створіть файл `.env` у корені проєкту на основі шаблону `.env.example`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Заповніть змінні середовища у `.env`:
+   - `SECRET_KEY` — секретний ключ Django;
+   - `DEBUG` — режим налагодження (`True` або `False`);
+   - `ALLOWED_HOSTS` — дозволені хости (наприклад, `127.0.0.1,localhost`).
+
+## Документація API (OpenAPI)
+
+Після запуску сервера (`python manage.py runserver`) інтерактивна документація доступна за адресами:
+- **Swagger UI:** http://127.0.0.1:8000/api/docs/
+- **ReDoc:** http://127.0.0.1:8000/api/redoc/
+- **OpenAPI Schema:** http://127.0.0.1:8000/api/schema/
+
+## Логування
+
+Події API (`INFO`, `WARNING`, `ERROR`) записуються у консоль та у файл `logs/filmshelf.log`.
+
+## Тестування та покриття коду
+
+Автотести використовують тестову фікстуру `bookstore/fixtures/test_movies.json`. Для запуску тестів і перевірки покриття коду виконайте:
+
+```bash
+coverage run --source='bookstore' manage.py test
+coverage report -m
+coverage html
+start htmlcov/index.html
+```
+
 ## 🔗 Посилання
 
 - Репозиторій: [посилання на GitHub.](https://github.com/kryysq/FilmShelf-API.git)
