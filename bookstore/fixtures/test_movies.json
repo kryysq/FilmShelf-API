@@ -1,0 +1,71 @@
+[
+  {
+    "model": "bookstore.director",
+    "pk": 1,
+    "fields": {
+      "name": "Christopher Nolan",
+      "bio": "British-American film director and screenwriter."
+    }
+  },
+  {
+    "model": "bookstore.director",
+    "pk": 2,
+    "fields": {
+      "name": "Denis Villeneuve",
+      "bio": "Canadian film director and screenwriter."
+    }
+  },
+  {
+    "model": "bookstore.genre",
+    "pk": 1,
+    "fields": {
+      "name": "Sci-Fi"
+    }
+  },
+  {
+    "model": "bookstore.genre",
+    "pk": 2,
+    "fields": {
+      "name": "Drama"
+    }
+  },
+  {
+    "model": "bookstore.movie",
+    "pk": 1,
+    "fields": {
+      "title": "Inception",
+      "director": 1,
+      "genre": 1,
+      "year": 2010,
+      "rating": "8.8",
+      "description": "A thief who steals corporate secrets through dream-sharing technology.",
+      "poster_url": "https://example.com/posters/inception.jpg"
+    }
+  },
+  {
+    "model": "bookstore.movie",
+    "pk": 2,
+    "fields": {
+      "title": "Interstellar",
+      "director": 1,
+      "genre": 2,
+      "year": 2014,
+      "rating": "8.7",
+      "description": "A team of explorers travel through a wormhole in space.",
+      "poster_url": "https://example.com/posters/interstellar.jpg"
+    }
+  },
+  {
+    "model": "bookstore.movie",
+    "pk": 3,
+    "fields": {
+      "title": "Dune",
+      "director": 2,
+      "genre": 1,
+      "year": 2021,
+      "rating": "8.0",
+      "description": "A noble family becomes embroiled in a war for control over the galaxy's most valuable asset.",
+      "poster_url": "https://example.com/posters/dune.jpg"
+    }
+  }
+]
