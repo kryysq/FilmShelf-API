@@ -152,12 +152,13 @@ class MovieListCreateAPIView(APIView):
 
     @extend_schema(
         summary="Створити новий фільм",
-        description="Створює новий запис фільму. Вимагає JWT-токен (Authorization: Bearer <token>).",
+        description="Створює новий запис фільму. Доступно лише авторизованим користувачам.",
         request=MovieSerializer,
         responses={
             201: MovieSerializer,
             400: OpenApiResponse(description="Невалідні дані запиту"),
-            401: OpenApiResponse(description="Не надано або недійсний JWT-токен"),
+            401: OpenApiResponse(description="Користувач не автентифікований"),
+            403: OpenApiResponse(description="Недостатньо прав доступу"),
         },
     )
     def post(self, request):
@@ -192,12 +193,13 @@ class MovieDetailAPIView(APIView):
 
     @extend_schema(
         summary="Повністю оновити фільм",
-        description="Повне оновлення полів фільму за ID. Вимагає JWT-автентифікації.",
+        description="Повне оновлення полів фільму за ID. Потрібна автентифікація.",
         request=MovieSerializer,
         responses={
             200: MovieSerializer,
             400: OpenApiResponse(description="Невалідні дані"),
             401: OpenApiResponse(description="Потрібна автентифікація"),
+            403: OpenApiResponse(description="Недостатньо прав доступу"),
             404: OpenApiResponse(description="Фільм не знайдено"),
         },
     )
@@ -213,12 +215,13 @@ class MovieDetailAPIView(APIView):
 
     @extend_schema(
         summary="Частково оновити фільм",
-        description="Часткове оновлення окремих полів фільму за ID. Вимагає JWT-автентифікації.",
+        description="Часткове оновлення окремих полів фільму за ID. Потрібна автентифікація.",
         request=MovieSerializer,
         responses={
             200: MovieSerializer,
             400: OpenApiResponse(description="Невалідні дані"),
             401: OpenApiResponse(description="Потрібна автентифікація"),
+            403: OpenApiResponse(description="Недостатньо прав доступу"),
             404: OpenApiResponse(description="Фільм не знайдено"),
         },
     )
@@ -234,10 +237,11 @@ class MovieDetailAPIView(APIView):
 
     @extend_schema(
         summary="Видалити фільм",
-        description="Видаляє фільм за ID. Вимагає JWT-автентифікації.",
+        description="Видаляє фільм за ID. Потрібна автентифікація.",
         responses={
             204: OpenApiResponse(description="Фільм успішно видалено"),
             401: OpenApiResponse(description="Потрібна автентифікація"),
+            403: OpenApiResponse(description="Недостатньо прав доступу"),
             404: OpenApiResponse(description="Фільм не знайдено"),
         },
     )
